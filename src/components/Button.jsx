@@ -1,3 +1,7 @@
 import React from "react"
 
-export const Button = ({text, onClick}) => <button onClick={onClick}>{text}</button>
+export const Button = ({text, onClick}) => (
+    <div className='wrapper'>
+        <button onClick={onClick}>{text}</button>
+    </div>
+)

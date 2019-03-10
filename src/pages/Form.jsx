@@ -55,7 +55,6 @@ const Form = ({ activeUser, userList, dispatch, history }) => {
                 name="phoneNumber"
                 placeholder="Enter your phone number"
                 onClick={setPhoneNumber}
-                type="number"
             />
             <Input
                 header='Email Address'
