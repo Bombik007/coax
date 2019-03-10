@@ -16,6 +16,7 @@ export const Input = ({
             onChange={e => onClick(e.target.value)}
             placeholder={placeholder}
             type={type}
+            required
         />
     </label>
 )

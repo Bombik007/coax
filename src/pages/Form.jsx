@@ -11,19 +11,12 @@ const Form = ({ activeUser, userList, dispatch, history }) => {
 
     const onSubmit = (event) => {
         event.preventDefault()
-        const { id } = activeUser
-        const user = {
-            firstName, 
-            lastName, 
-            phoneNumber,
-            date,
-            email
-        }
+        const user = {firstName, lastName, phoneNumber, date, email}
         let result = [...userList]
 
         if (userList.includes(activeUser)) {
-            user.id = id
-            const index = userList.findIndex(el => el.id === id)
+            const index = userList.findIndex(el => el.id === activeUser.id)
+            user.id = activeUser.id
             result.splice(index, 1, user)
         } else {
             result.push({...user, id: userList.length + 1})
