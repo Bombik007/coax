@@ -1,9 +1,9 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
 import Form from './pages/Form'
 import store from './store/store'
-import Dashboard from './components/Draggable';
 
 export const Router = () => (
     <Provider store={store}>
