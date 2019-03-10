@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Button, Thumbnail } from '../components'
 
-const reorder = (list, startIndex, endIndex) => {
+const reorderList = (list, startIndex, endIndex) => {
     const result = Array.from(list)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
@@ -39,7 +39,7 @@ const Dashboard = ({userList, dispatch, history}) => {
     const onDragEnd = (result) => {
         if (!result.destination) return
 
-        const items = reorder(
+        const items = reorderList(
             list,
             result.source.index,
             result.destination.index
