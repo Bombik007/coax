@@ -1,28 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import { Button, Thumbnail } from '../components'
-
-const grid = 3
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
-
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
-  // styles we need to apply on draggables
-  ...draggableStyle,
-})
-
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'white',
-  display: 'flex',
-  padding: grid,
-  overflow: 'auto',
-})
+import { Button } from './Button'
+import { Thumbnail } from './Thumbnail'
 
 const Dashboard = ({userList, dispatch, history}) => {
   let [list, setList] = useState(userList)
@@ -72,33 +52,36 @@ const Dashboard = ({userList, dispatch, history}) => {
       <>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
-          {(provided, snapshot) => (
+          {(provided) => (
             <div
               ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
+              className='testList'
               {...provided.droppableProps}
             >
-              {list.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+              {
+                list.map((el, index) => (
+                <Draggable 
+                  key={el.id} 
+                  draggableId={el.id} 
+                  index={index}
+                >
+                  {(provided) => (
                     <div
+                      className='testItem'
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
                     >
                       <Thumbnail
-                        key={item.id}
-                        {...item} 
+                        key={el.id}
+                        {...el} 
                         onClick={selectUser}
                       />
                     </div>
                   )}
                 </Draggable>
-              ))}
+              ))
+              }
               {provided.placeholder}
             </div>
           )}

@@ -44,7 +44,7 @@ form p {
 }
 
 .thumbnail {
-    max-width: 250px;
+    width: 250px;
 }
 
 .paper {
@@ -57,4 +57,17 @@ form p {
 
 .flex {
     display: flex;
+}
+
+.testList {
+    background: white;
+    display: flex;
+    padding: grid;
+    overflow: auto;
+}
+
+.testItem {
+    padding: 15px;
+    margin: 0 8px 0 0;
+    background: 'white';
 }
