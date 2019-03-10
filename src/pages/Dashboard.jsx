@@ -51,11 +51,11 @@ const Dashboard = ({userList, dispatch, history}) => {
       <>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
-          {(provided) => (
+          {({droppableProps, innerRef, placeholder}) => (
             <div
-              ref={provided.innerRef}
               className='testList'
-              {...provided.droppableProps}
+              ref={innerRef}
+              {...droppableProps}
             >
               {
                 list.map((el, index) => (
@@ -64,24 +64,24 @@ const Dashboard = ({userList, dispatch, history}) => {
                   draggableId={el.id} 
                   index={index}
                 >
-                  {(provided) => (
+                  {({draggableProps, dragHandleProps, innerRef}) => (
                     <div
                       className='testItem'
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
+                      ref={innerRef}
+                      {...draggableProps}
+                      {...dragHandleProps}
                     >
-                      <Thumbnail
-                        key={el.id}
-                        {...el} 
-                        onClick={selectUser}
-                      />
+                        <Thumbnail
+                            key={el.id}
+                            {...el} 
+                            onClick={selectUser}
+                        />
                     </div>
                   )}
                 </Draggable>
               ))
               }
-              {provided.placeholder}
+              {placeholder}
             </div>
           )}
         </Droppable>

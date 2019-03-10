@@ -17,6 +17,7 @@ code {
 
 .wrapper {
     margin-top: 15px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
 }
@@ -45,10 +46,26 @@ form p {
 
 .thumbnail {
     width: 250px;
+    height: 148px;
 }
 
 .flex {
     display: flex;
+}
+
+button {
+    background-color: #bebebe;
+    border: 1px solid #000;
+    width: 350px;
+    font-size: 15px;
+    padding: 10px;
+    box-shadow: 0 6px 8px -2px grey;
+}
+
+button:active {
+    box-shadow: 0 0px #666;
+    transform: translateY(5px);
+    outline: none;
 }
 
 .paper {
@@ -62,8 +79,11 @@ form p {
 
 .testList {
     background: white;
+    max-width: 960px;
+    margin: 0 auto;
     display: flex;
-    padding: grid;
+    flex-direction: row;
+    flex-wrap: wrap;
     overflow: auto;
 }
 
