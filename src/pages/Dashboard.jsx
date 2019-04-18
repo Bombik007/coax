@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Button, Thumbnail } from '../components'
+import { actionTypes } from '../store/actionTypes';
 
 const reorderList = (list, startIndex, endIndex) => {
     const result = [...list]
@@ -11,6 +12,7 @@ const reorderList = (list, startIndex, endIndex) => {
 }
 
 const Dashboard = ({userList, dispatch, history}) => {
+    const { SET_LIST, SET_USER } = actionTypes;
     let [list, setList] = useState(userList)
     
     useEffect(() => {
@@ -18,19 +20,19 @@ const Dashboard = ({userList, dispatch, history}) => {
         if (rawData !== null) {
             const data = JSON.parse(rawData)
             setList(data)
-            dispatch({type: 'SET_LIST', userList: data})
+            dispatch({type: SET_LIST, userList: data})
         }
     }, [])
   
     const selectUser = (id) => {
         const activeUser = list.find(el => el.id === id)
-        dispatch({type: 'SET_USER', activeUser})
+        dispatch({type: SET_USER, activeUser})
         history.push('/user')
     }
   
     const goToForm = (event) => {
         event.preventDefault()
-        dispatch({type: 'SET_USER', activeUser: {}})
+        dispatch({type: SET_USER, activeUser: {}})
         history.push('/user')
     }
 
@@ -90,6 +92,6 @@ const Dashboard = ({userList, dispatch, history}) => {
     )
 }
 
-const mapStateToProps = store => ({userList: store.userList})
+const mapStateToProps = ({ userList }) => ({ userList })
 
 export default connect(mapStateToProps)(Dashboard)

@@ -2,30 +2,44 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Button, Input } from '../components'
 
+const defaultUserData = {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    date: '',
+    email: ''
+}
+
 const Form = ({ activeUser, userList, dispatch, history }) => {
-    let [firstName, setFirstName] = useState(activeUser.firstName || '')
-    let [lastName, setLastName] = useState(activeUser.lastName || '')
-    let [phoneNumber, setPhoneNumber] = useState(activeUser.phoneNumber || '')
-    let [date, setDate] = useState(activeUser.date ||'')
-    let [email, setEmail] = useState(activeUser.email || '')
+    activeUser = !Object.keys(activeUser).length ? defaultUserData : activeUser
+
+    const [ form, setValues ] = useState(activeUser);
+    const { firstName, lastName, phoneNumber, date, email } = form;
+
+    const onChange = (event) => {
+        setValues({
+            ...form,
+            [event.target.name]: event.target.value
+        })
+    }
 
     const onSubmit = (event) => {
         event.preventDefault()
-        const user = {firstName, lastName, phoneNumber, date, email}
         let result = [...userList]
 
         if (userList.includes(activeUser)) {
             const index = userList.findIndex(el => el.id === activeUser.id)
-            user.id = activeUser.id
-            result.splice(index, 1, user)
+            form.id = activeUser.id
+            result.splice(index, 1, form)
         } else {
-            result.push({...user, id: userList.length + 1})
+            result.push({...form, id: userList.length + 1})
         }
 
         dispatch({type: 'SET_LIST', userList: result})
         localStorage.setItem('ccx', JSON.stringify(result))
         history.push('/')
     }
+
     return (
         <form className='paper' onSubmit={onSubmit}>
             <Input
@@ -33,28 +47,28 @@ const Form = ({ activeUser, userList, dispatch, history }) => {
                 value={firstName}
                 name="firstName"
                 placeholder="Enter first name"
-                onClick={setFirstName}
+                onClick={onChange}
             />
             <Input
                 header='Last Name'
                 value={lastName}
                 name="lastName"
                 placeholder="Enter last name"
-                onClick={setLastName}
+                onClick={onChange}
             />
             <Input
                 header='Phone Number'
                 value={phoneNumber}
                 name="phoneNumber"
                 placeholder="Enter your phone number"
-                onClick={setPhoneNumber}
+                onClick={onChange}
             />
             <Input
                 header='Email Address'
                 value={email}
                 name="email"
                 placeholder="Enter your email address"
-                onClick={setEmail}
+                onClick={onChange}
                 type="email"
             />
             <Input
@@ -62,16 +76,13 @@ const Form = ({ activeUser, userList, dispatch, history }) => {
                 value={date}
                 name="date"
                 placeholder="Enter your date of birth"
-                onClick={setDate}
+                onClick={onChange}
             />
             <Button text="Save Contact"/>
         </form>
     )
 }
 
-const mapStateToProps = store => ({
-    userList: store.userList,
-    activeUser: store.activeUser
-})
+const mapStateToProps = ({ userList, activeUser}) => ({ userList, activeUser })
 
 export default connect(mapStateToProps)(Form)

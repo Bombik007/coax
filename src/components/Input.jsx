@@ -13,7 +13,7 @@ export const Input = ({
         <input
             value={value}
             name={name}
-            onChange={e => onClick(e.target.value)}
+            onChange={onClick}
             placeholder={placeholder}
             type={type}
             required
